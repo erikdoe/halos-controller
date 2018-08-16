@@ -1,0 +1,5 @@
+{
+    "port": "/dev/cu.usbmodem1A1511",
+    "board": "arduino:avr:uno",
+    "sketch": "HalosController.ino"
+}

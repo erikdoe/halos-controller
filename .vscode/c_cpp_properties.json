@@ -1,0 +1,35 @@
+{
+    "env": {
+        "appFolder": "/Applications/Developer/Arduino.app",
+        "sketchbookFolder": "/Users/erik/Projects/Arduino"
+    },
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${appFolder}/Contents/Java/hardware/arduino/avr/cores/arduino/",
+                "${appFolder}/Contents/Java/hardware/arduino/avr/libraries/SoftwareSerial/",
+                "${appFolder}/Contents/Java/hardware/tools/avr/avr/include/",
+                "${appFolder}/Contents/Java/hardware/tools/avr/avr/include/avr/",
+                "${appFolder}/Contents/Java/hardware/tools/avr/avr/include/compat/",
+                "${appFolder}/Contents/Java/hardware/tools/avr/avr/include/util/",
+                "${appFolder}/Contents/Java/hardware/arduino/avr/variants/standard/",
+                "${sketchbookFolder}/libraries/Adafruit_NeoPixel",
+                "${sketchbookFolder}/libraries/TimerOne",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "ARDUINO=101"
+            ],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

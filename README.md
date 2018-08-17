@@ -7,6 +7,8 @@ Arduino controller for Phanteks [Halos RGB Fan Frames](http://www.phanteks.com/H
 
 ### Wiring
 
+![Wiring diagram](doc/Wiring_bb.png)
+
 #### Frame
 
 * grey wire from frame -> 5V

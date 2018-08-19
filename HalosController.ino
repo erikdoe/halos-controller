@@ -2,6 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <TimerOne.h>
 #include "Patterns.h"
+#include "Sounds.h"
 
 
 // Address in EEPROM where to store the selected pattern intext
@@ -34,6 +35,7 @@ void setup() {
   
   pinMode(2, INPUT_PULLUP);
   pinMode(3, INPUT_PULLUP);
+  pinMode(4, OUTPUT);
   attachInterrupt(digitalPinToInterrupt(2), buttonIntr, CHANGE);
 
   Timer1.initialize(2000000L);
@@ -42,6 +44,8 @@ void setup() {
   if (patternIdx > numPatterns) {
     patternIdx = 0;
   }
+
+  startup(4);
 }
 
 
@@ -61,17 +65,18 @@ void loop() {
 void buttonIntr() {
   delay(2);
   unsigned long t = millis() - lastButtonIntr;
+  lastButtonIntr = millis();
   if (isButtonDown()) {
     if (t > 2) {
       Timer1.start();
       Timer1.attachInterrupt(timerIntr);
+      beep(4);
    }
  } else {
     if ((t > 2) && (t < 2000)) {
       buttonPress();
     }
   }
-  lastButtonIntr = millis();
 }
 
 void timerIntr() {
@@ -80,6 +85,7 @@ void timerIntr() {
     Timer1.stop();
     Timer1.detachInterrupt();
     if (isButtonDown()) {
+      beepbeep(4);
       buttonLongPress();
     }
    }
@@ -87,7 +93,7 @@ void timerIntr() {
 
 void buttonPress() {
   patternIdx = (patternIdx+1) % numPatterns;
-  EEPROM.update(PATTERN_IDX_EEPROM_ADDR, patternIdx);
+  // EEPROM.update(PATTERN_IDX_EEPROM_ADDR, patternIdx);
 }
 
 void buttonLongPress() {

@@ -7,7 +7,7 @@ extern void (*patternFunctions[])();
 extern uint8_t numPatterns;
 
 // Function to turn off all LEDs
-extern void clear();
+void clear();
 
 // Function to create a breathe effect (hard-coded to blue)
-extern void breathe();
+void breathe();

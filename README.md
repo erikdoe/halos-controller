@@ -51,8 +51,6 @@ The following libraries must be installed in the Arduino library directory. They
 * Press push button and hold for more than 2s to turn LEDs on and off.
 
 
-## Demo
+## Videos
 
-<iframe src="https://player.vimeo.com/video/285891874?loop=1" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-<p><a href="https://vimeo.com/285891874">Arduino Halos Prototype</a> from <a href="https://vimeo.com/user3291891">Erik D.</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-<p>Shows the Arduino next to a Halos Digital frame mounted on a fan. This fan has black blades, which makes the effect slightly less even, but, hey, all the fans with white blades are in my computer.</p>
+Videos of the patterns are available in [this album](https://vimeo.com/album/5363385/video/285890100) on Vimeo.

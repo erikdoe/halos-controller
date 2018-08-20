@@ -53,4 +53,4 @@ The following libraries must be installed in the Arduino library directory. They
 
 ## Videos
 
-Videos of the patterns are available in [this album](https://vimeo.com/album/5363385/video/285890100) on Vimeo.
+Videos of the patterns are available in [this album](https://vimeo.com/album/5363385) on Vimeo.

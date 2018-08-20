@@ -41,7 +41,7 @@ uint32_t mix_g(uint32_t c1, uint32_t c2, uint16_t r) {
 uint8_t shift(int idx, uint8_t val, uint8_t dir) {
   uint16_t n = frame.numPixels();
   uint8_t result = (idx+val) % n;
-  return (dir == CW) ? result : n - result;
+  return (dir == CW) ? result : (n-1) - result;
 }
 
 uint8_t incOffset() {

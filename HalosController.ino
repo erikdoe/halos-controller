@@ -33,9 +33,9 @@ void setup() {
   frame.show();
   
   pinMode(2, INPUT_PULLUP);
-  pinMode(3, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(2), buttonIntr, CHANGE);
+  pinMode(3, INPUT);
 
+  attachInterrupt(digitalPinToInterrupt(2), buttonIntr, CHANGE);
   Timer1.initialize(2000000L);
 
   patternIdx = EEPROM.read(PATTERN_IDX_EEPROM_ADDR);

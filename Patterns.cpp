@@ -173,7 +173,7 @@ void breathe()
   uint8_t x = frame.sine8(counter);
   uint8_t l = frame.gamma8(x/2+8); // shifting by 8 to get roughly 57 zeroes in a cycle
   // breatheDiagnostics(l);
-  fill(rgb(0, 0, l), 9);
+  fill(rgb(0, 0, l), 14);
 }
 
 void breatheDiagnostics(uint8_t l) {
@@ -210,7 +210,7 @@ void fillDarkBlue() {
 }
 
 void blueFiveBladeRotor() {
-  rotor(rgb_g(0, 0, 255), rgb_g(0, 0, 96), 6, 1, CCW, 50);
+  rotor(rgb_g(0, 0, 255), rgb_g(0, 0, 96), 6, 1, CCW, 60);
 }
 
 void magentaSpinner() {
@@ -226,15 +226,15 @@ void clockHand() {
 }
 
 void darkOrangeSweep() {
-  gradient(rgb(128, 64, 0), rgb(128-2*30, 64-30, 0), 30, CW, 30);
+  gradient(rgb(160, 80, 0), rgb(160-2*30, 64-30, 0), 30, CW, 30);
 }
 
 void darkRedSweep() {
-  gradient(rgb(128, 0, 0), rgb(128-2*30, 0, 0), 30, CW, 30);
+  gradient(rgb(160, 0, 0), rgb(160-2*30, 0, 0), 30, CW, 30);
 }
 
 void blueMultiSweep() {
-  gradient(rgb(0, 0, 255), rgb(0, 0, 128), 6, CCW, 50);
+  gradient(rgb(0, 0, 255), rgb(0, 0, 96), 6, CCW, 60);
 }
 
 void blueRedDoubleGradient() {

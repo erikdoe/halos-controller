@@ -18,7 +18,7 @@ Provided there is a suitable source to indicate that the computer is sleeping (s
 
 An Arduino draws less than 50mA and a single Halos frame can draw up to about 380mA (my measurements, use at your own risk). A USB port provides at least 500mA. So, running the controller and one frame on a single USB port should be fine. 
 
-Depending on the BIOS/UEFI settings the mainboard may  provide power to its USB headers and ports even when it's off. On my mainboard this happens when the ErP power saving mode is disabled. In that case the breathing light is also displayed even when the computer is off.
+Depending on the BIOS/UEFI settings the mainboard may  provide power to its USB headers and ports even when it's off. On my mainboard this happens when the ErP power saving mode is disabled. In that case the breathing light is also displayed when the computer is off.
 
 ### Halos Digital frame
 
@@ -49,3 +49,10 @@ The following libraries must be installed in the Arduino library directory. They
 * Upload sketch to Arduino.
 * Press push button to cycle through patterns.
 * Press push button and hold for more than 2s to turn LEDs on and off.
+
+
+## Demo
+
+<iframe src="https://player.vimeo.com/video/285891874?loop=1" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<p><a href="https://vimeo.com/285891874">Arduino Halos Prototype</a> from <a href="https://vimeo.com/user3291891">Erik D.</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+<p>Shows the Arduino next to a Halos Digital frame mounted on a fan. This fan has black blades, which makes the effect slightly less even, but, hey, all the fans with white blades are in my computer.</p>

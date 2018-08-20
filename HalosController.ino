@@ -4,7 +4,7 @@
 #include "Patterns.h"
 
 
-// Address in EEPROM where to store the selected pattern intext
+// Address in EEPROM where to store the selected pattern index
 #define PATTERN_IDX_EEPROM_ADDR 67
 
 // Variable that holds the index of the currently selected pattern
@@ -39,7 +39,7 @@ void setup() {
   Timer1.initialize(2000000L);
 
   patternIdx = EEPROM.read(PATTERN_IDX_EEPROM_ADDR);
-  if (patternIdx > numPatterns) {
+  if (patternIdx >= numPatterns) {
     patternIdx = 0;
   }
 }

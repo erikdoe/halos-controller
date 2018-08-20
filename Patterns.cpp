@@ -6,44 +6,53 @@ extern Adafruit_NeoPixel frame;
 
 // HELPER FUNCTIONS
 
+// Values for clockwise and counter-clockwise
 #define CW 0
 #define CCW 1
 
+// Macros to unpack a colour in 32-bit representation
 #define R(c) ((c) >> 16 & 0xFF)
 #define G(c) ((c) >> 8 & 0xFF)
 #define B(c) ((c) & 0xFF)
 
+// Wrapper for merging colour components into 32-bit representation
 uint32_t rgb(uint8_t r, uint8_t g, uint8_t b) {
   return frame.Color(r, g, b);
 }
 
+// Wrapper for merging colour components while applying a gamma function
 uint32_t rgb_g(uint8_t r, uint8_t g, uint8_t b) {
   return frame.Color(frame.gamma8(r), frame.gamma8(g), frame.gamma8(b));
 }
 
+// Mixes two colour channels (c1 for r = 0 to c2 for r = 1000)
 uint32_t mixChannel(uint32_t c1, uint32_t c2, uint16_t r) {
   return (c1 > c2) ? (c1 - (c1-c2)*r/1000) 
                    : (c2 - (c2-c1)*(1000-r)/1000);
 }
 
+// Mixes two colours (c1 for r = 0 to c2 for r = 1000)
 uint32_t mix(uint32_t c1, uint32_t c2, uint16_t r) {
   return rgb(mixChannel(R(c1), R(c2), r), 
              mixChannel(G(c1), G(c2), r), 
              mixChannel(B(c1), B(c2), r));
 }
 
+// Mixes two colours and applies a gamma function to result
 uint32_t mix_g(uint32_t c1, uint32_t c2, uint16_t r) {
   return rgb_g(mixChannel(R(c1), R(c2), r), 
                mixChannel(G(c1), G(c2), r), 
                mixChannel(B(c1), B(c2), r));
 }
 
+// Shifts idx by val in direction dir, limiting result to size of frame
 uint8_t shift(int idx, uint8_t val, uint8_t dir) {
   uint16_t n = frame.numPixels();
   uint8_t result = (idx+val) % n;
   return (dir == CW) ? result : (n-1) - result;
 }
 
+// Increments and returns an offset, limited to size of frame
 uint8_t incOffset() {
   static uint8_t offset = 0;
   offset = (offset+1) % frame.numPixels();
@@ -53,7 +62,7 @@ uint8_t incOffset() {
 
 // PRIMITIVES
 
-// Fills LEDs with the given colour
+// Fills LEDs with a colour
 // c: colour
 void fill(uint32_t c, uint16_t wait) {
   uint16_t n = frame.numPixels();

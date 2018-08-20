@@ -1,13 +1,13 @@
 # Halos Controller
 
-This program turns an Arduino in a controller for Phanteks [Halos Digital RGB Fan Frames](http://www.phanteks.com/HalosDigital.html). It comes with ten predefined patterns, and further patterns can be created in code with the help of a number of versatile primitives. 
+This program turns an Arduino into a controller for Phanteks' [Halos Digital RGB Fan Frames](http://www.phanteks.com/HalosDigital.html). It comes with ten predefined patterns, and further patterns can be created in code with the help of a number of versatile primitives. 
 
 Provided there is a suitable source to indicate that the computer is sleeping (see below), the program renders a breathing pattern when the computer is sleeping.
 
 
 ## Wiring
 
-No warranties. The following diagram might be incorrect. I take no responsibility for any damanges caused by using the diagram and information below.
+**No warranties. The following diagram might be incorrect. I take no responsibility for any damanges caused by using the diagram and information below.**
 
 ![Wiring diagram](doc/Wiring_bb.png)
 
@@ -18,9 +18,9 @@ No warranties. The following diagram might be incorrect. I take no responsibilit
 
 An Arduino draws less than 50mA and a single Halos frame can draw up to about 380mA (my measurements, use at your own risk). A USB port provides at least 500mA. So, running the controller and one frame on a single USB port should be fine. 
 
-Depending on the BIOS/UEFI settings the computer may even provide power to the USB ports when it's off. On my mainboard this happens when the ErP power saving mode is disabled.
+Depending on the BIOS/UEFI settings the mainboard may  provide power to its USB headers and ports even when it's off. On my mainboard this happens when the ErP power saving mode is disabled. In that case the breathing light is also displayed even when the computer is off.
 
-### Halos frame
+### Halos Digital frame
 
 * grey wire from frame -> 5V
 * black center wire from frame -> pin 6
@@ -28,18 +28,12 @@ Depending on the BIOS/UEFI settings the computer may even provide power to the U
 
 ### Controls
 
-* push button (open / connect to GND) -> pin 2
-* sleep indicator (open / connect to GND) -> pin 3
+* push button (open/GND) -> pin 2
+* sleep indicator (HIGH/LOW) -> pin 3
 
-When connecting the sleep indicator pin to 5V from an internal HDD connector, e.g. molex, the pullup in the code should be removed, i.e. in that case in the `setup` function 
+The reset button can be a good choice for the push button.
 
-```pinMode(3, INPUT_PULLUP);```
-
-should be changed to 
-
-```pinMode(3, INPUT);```
-
-The reset button might be a good choice for the push button.
+The PWR or MSG LED pins on the front-panel header can be used to detect whether the computer is awake/asleep. (This is what I use.) The program assumes `LOW` = asleep, `HIGH` = awake. Another option could be the 5V pin of an internal HDD power cable. I haven't tested this, though.
 
 
 ## Required libraries

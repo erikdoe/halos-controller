@@ -6,6 +6,9 @@ extern Adafruit_NeoPixel frame;
 
 // HELPER FUNCTIONS
 
+#define CW 0
+#define CCW 1
+
 #define R(c) ((c) >> 16 & 0xFF)
 #define G(c) ((c) >> 8 & 0xFF)
 #define B(c) ((c) & 0xFF)
@@ -18,12 +21,6 @@ uint32_t rgb_g(uint8_t r, uint8_t g, uint8_t b) {
   return frame.Color(frame.gamma8(r), frame.gamma8(g), frame.gamma8(b));
 }
 
-uint32_t darken(uint32_t c, uint16_t p) {
-  return rgb_g(R(c)*(1000-p)/1000, 
-               G(c)*(1000-p)/1000, 
-               B(c)*(1000-p)/1000);
-}
-
 uint32_t mixChannel(uint32_t c1, uint32_t c2, uint16_t p) {
   return (c1 > c2) ? (c1 - (c1-c2)*p/1000) 
                    : (c2 - (c2-c1)*(1000-p)/1000);
@@ -33,6 +30,18 @@ uint32_t mix(uint32_t c1, uint32_t c2, uint16_t p) {
   return rgb(mixChannel(R(c1), R(c2), p), 
              mixChannel(G(c1), G(c2), p), 
              mixChannel(B(c1), B(c2), p));
+}
+
+uint32_t mix_g(uint32_t c1, uint32_t c2, uint16_t p) {
+  return rgb_g(mixChannel(R(c1), R(c2), p), 
+               mixChannel(G(c1), G(c2), p), 
+               mixChannel(B(c1), B(c2), p));
+}
+
+uint8_t pidx(int i, uint8_t o, uint8_t dir) {
+  uint16_t n = frame.numPixels();
+  uint8_t pidx = (i+o) % n;
+  return (dir == CW) ? pidx : n - pidx;
 }
 
 
@@ -77,16 +86,19 @@ void rotor(uint32_t c1, uint32_t c2, uint8_t s, uint8_t w, int8_t d, uint16_t wa
   }
 }
 
-// Shows a phosphor-radar sweep
+// Shows a rotating repeated gradient
 // c1: colour
-// f: fade percentage per LED
-void sweep(uint32_t c, uint8_t f, uint16_t wait) {
+// c2: colour
+// s: spacing between gradient starts (should be a divisor of 30)
+// dir: direction
+void gradient(uint32_t c1, uint32_t c2, uint8_t s, uint8_t dir, uint16_t wait) {
   uint16_t n = frame.numPixels();
   static uint8_t fc = 0;
   fc = (fc+1) % n;
 
   for (int i = 0; i < n; i++) {
-    frame.setPixelColor((i+fc) % n, darken(c, f*10*(n-i)));
+    uint16_t r = 1000 - 1000*(i%s)/s;
+    frame.setPixelColor(pidx(i, fc, dir), mix_g(c1, c2, r));
   }
   
   frame.show();
@@ -221,11 +233,15 @@ void clockHand() {
 }
 
 void darkOrangeSweep() {
-  sweep(rgb(255, 96, 0), 3, 45);
+  gradient(rgb(128, 64, 0), rgb(128-2*30, 64-30, 0), 30, CW, 30);
 }
 
 void darkRedSweep() {
-  sweep(rgb(128, 0, 0), 2, 45);
+  gradient(rgb(128, 0, 0), rgb(128-2*30, 0, 0), 30, CW, 30);
+}
+
+void blueMultiSweep() {
+  gradient(rgb(0, 0, 255), rgb(0, 0, 128), 6, CCW, 50);
 }
 
 void blueRedDoubleGradient() {
@@ -248,14 +264,14 @@ void randomLightning() {
 uint8_t numPatterns = NUM_PATTERNS;
 
 void (*patternFunctions[NUM_PATTERNS])() = {
-  fillDarkBlue,
-  blueFiveBladeRotor,
-  redPropeller,
-  clockHand,
-  randomLightning,
-  magentaSpinner,
-  blueRedDoubleGradient,
   rainbow,
+  blueRedDoubleGradient,
+  magentaSpinner,
+  redPropeller,
+  blueFiveBladeRotor,
+  blueMultiSweep,
   darkRedSweep,
-  darkOrangeSweep
+  darkOrangeSweep,
+  fillDarkBlue,
+  randomLightning
 };

@@ -44,6 +44,12 @@ uint8_t shift(int idx, uint8_t val, uint8_t dir) {
   return (dir == CW) ? result : n - result;
 }
 
+uint8_t incOffset() {
+  static uint8_t offset = 0;
+  offset = (offset+1) % frame.numPixels();
+  return offset;
+}
+
 
 // PRIMITIVES
 
@@ -63,14 +69,13 @@ void fill(uint32_t c, uint16_t wait) {
 // c2: background colour
 // s: spacing between blades (should be a divisor of 30)
 // w: width of the blades (should be less than s)
-// d: direction (1 = clockwise, -1 = counter-clockwise)
-void rotor(uint32_t c1, uint32_t c2, uint8_t s, uint8_t w, int8_t d, uint16_t wait) {
+// dir: direction
+void rotor(uint32_t c1, uint32_t c2, uint8_t s, uint8_t w, int8_t dir, uint16_t wait) {
   uint16_t n = frame.numPixels();
-  static uint8_t offset = 0;
-  offset = (offset+1) % n;
+  uint8_t offset = incOffset();
 
   for (int i = 0; i < n; i ++) {
-    frame.setPixelColor(shift(i, offset, d), (i%s < w) ? c1 : c2);
+    frame.setPixelColor(shift(i, offset, dir), (i%s < w) ? c1 : c2);
   }
 
   frame.show();
@@ -78,14 +83,13 @@ void rotor(uint32_t c1, uint32_t c2, uint8_t s, uint8_t w, int8_t d, uint16_t wa
 }
 
 // Shows a rotating repeated gradient
-// c1: colour
-// c2: colour
+// c1: first colour
+// c2: second colour
 // s: spacing between gradient starts (should be a divisor of 30)
 // dir: direction
 void gradient(uint32_t c1, uint32_t c2, uint8_t s, uint8_t dir, uint16_t wait) {
   uint16_t n = frame.numPixels();
-  static uint8_t offset = 0;
-  offset = (offset+1) % n;
+  uint8_t offset = incOffset();
 
   for (int i = 0; i < n; i++) {
     uint16_t r = 1000 - 1000*(i%s)/s;
@@ -101,8 +105,7 @@ void gradient(uint32_t c1, uint32_t c2, uint8_t s, uint8_t dir, uint16_t wait) {
 // c2: second colour
 void doubleGradient(uint32_t c1, uint32_t c2, uint16_t wait) {
   uint16_t n = frame.numPixels();
-  static uint8_t offset = 0;
-  offset = (offset+1) % n;
+  uint8_t offset = incOffset();
   
   for (int i = 0; i < n; i++) {
     if (i < n/2) {
@@ -122,8 +125,7 @@ void doubleGradient(uint32_t c1, uint32_t c2, uint16_t wait) {
 // c3: third colour
 void tripleGradient(uint32_t c1, uint32_t c2, uint32_t c3, uint16_t wait) {
   uint16_t n = frame.numPixels();
-  static uint8_t offset = 0;
-  offset = (offset+1) % n;
+  uint8_t offset = incOffset();
   
   for (int i = 0; i < n; i++) {
     if (i < n/3) {

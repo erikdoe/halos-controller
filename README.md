@@ -1,6 +1,8 @@
 # Halos Controller
 
-This program turns an Arduino in a controller for Phanteks [Halos Digital RGB Fan Frames](http://www.phanteks.com/HalosDigital.html). It comes with ten predefined patterns, and further patterns can be created in code with the help of a number of versatile primitives. When connected to a suitable source (see below), it renders a breathing pattern when the computer is asleep.
+This program turns an Arduino in a controller for Phanteks [Halos Digital RGB Fan Frames](http://www.phanteks.com/HalosDigital.html). It comes with ten predefined patterns, and further patterns can be created in code with the help of a number of versatile primitives. 
+
+Provided there is a suitable source to indicate that the computer is sleeping (see below), the program renders a breathing pattern when the computer is sleeping.
 
 
 ## Wiring
@@ -14,7 +16,7 @@ No warranties. The following diagram might be incorrect. I take no responsibilit
 * internal USB2 header: pin 8 -> GND, pin 2 -> Vin
 * alternatively connect the Arduino with a USB cable
 
-An Arduino draws less than 50mA and a single Halos frame can draw up to about 380mA (measured with rainbow pattern). A USB port provides at least 500mA. So, running the controller and one frame on a single USB port is fine. 
+An Arduino draws less than 50mA and a single Halos frame can draw up to about 380mA (my measurements, use at your own risk). A USB port provides at least 500mA. So, running the controller and one frame on a single USB port should be fine. 
 
 Depending on the BIOS/UEFI settings the computer may even provide power to the USB ports when it's off. On my mainboard this happens when the ErP power saving mode is disabled.
 
@@ -31,11 +33,13 @@ Depending on the BIOS/UEFI settings the computer may even provide power to the U
 
 When connecting the sleep indicator pin to 5V from an internal HDD connector, e.g. molex, the pullup in the code should be removed, i.e. in that case in the `setup` function 
 
-  pinMode(3, INPUT_PULLUP);
+```pinMode(3, INPUT_PULLUP);```
 
 should be changed to 
 
-  pinMode(3, INPUT);
+```pinMode(3, INPUT);```
+
+The reset button might be a good choice for the push button.
 
 
 ## Required libraries

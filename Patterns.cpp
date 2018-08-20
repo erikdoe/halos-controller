@@ -66,23 +66,15 @@ void fill(uint32_t c, uint16_t wait) {
 // d: direction (1 = clockwise, -1 = counter-clockwise)
 void rotor(uint32_t c1, uint32_t c2, uint8_t s, uint8_t w, int8_t d, uint16_t wait) {
   uint16_t n = frame.numPixels();
-  static uint8_t fc = 0;
-  fc = (fc+1) % s;
+  static uint8_t offset = 0;
+  offset = (offset+1) % n;
 
-  for (int i = 0; i < n; i += s) {
-    for (int j = 0; j < w; j++) {
-      frame.setPixelColor(shift(i+j, fc, d), c1);
-    }
+  for (int i = 0; i < n; i ++) {
+    frame.setPixelColor(shift(i, offset, d), (i%s < w) ? c1 : c2);
   }
 
   frame.show();
   delay(wait);
-
-  for (int i = s; i < n+s; i += s) {
-    for (int j = 0; j < w; j++) {
-      frame.setPixelColor(shift(i+j, fc, d), c2);
-    }
-  }
 }
 
 // Shows a rotating repeated gradient

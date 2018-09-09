@@ -13,12 +13,13 @@ Provided there is a suitable source to indicate that the computer is sleeping (s
 
 ### Power
 
-* internal USB2 header: pin 8 -> GND, pin 2 -> Vin
-* alternatively connect the Arduino with a USB cable
+* connect the Arduino with a USB cable
 
 An Arduino draws less than 50mA and a single Halos frame can draw up to about 380mA (my measurements, use at your own risk). A USB port provides at least 500mA. So, running the controller and one frame on a single USB port should be fine. 
 
 Depending on the BIOS/UEFI settings the mainboard may  provide power to its USB headers and ports even when it's off. On my mainboard this happens when the ErP power saving mode is disabled. In that case the breathing light is also displayed when the computer is off.
+
+Previously I had suggested to connect the Arduino's Vin to a 5V pin on an internal USB header in order to avoid an unsightly USB cable in the case. Obviously, this delivers only 5V on Vin even though the recommendation is 7-12V. The setup works most of the time in my case, but it is not really stable and the Arduino crashes every now and then. 
 
 ### Halos Digital frame
 
@@ -51,6 +52,8 @@ The following libraries must be installed in the Arduino library directory. They
 * Press push button and hold for more than 2s to turn LEDs on and off.
 
 
-## Videos
+## Videos and background
 
 Videos of the patterns are available in [this album](https://vimeo.com/album/5363385) on Vimeo.
+
+Some background on the project in [this blog post](https://erik.doernenburg.com/2018/08/an-arduino-digital-led-controller/).
